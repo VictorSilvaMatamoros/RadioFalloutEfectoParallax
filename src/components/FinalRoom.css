@@ -127,3 +127,152 @@
   backdrop-filter: blur(6px);
   pointer-events: none;
 }
+/* —————————— Tamaño base para desktop —————————— */
+.final-room {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  transform: translateY(-3px);
+}
+.interactive-object {
+  position: absolute;
+  width: 120px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+  z-index: 2;
+}
+/* posiciones desktop (ya las tienes) */
+.radio { top: 50%; left: 71%; }
+.pipboy { top: 80%; left: 6%; }
+.mr     { top: 24%; left: 38%; width: 300px; }
+
+/* ——————— Responsive para pantallas pequeñas ——————— */
+@media (max-width: 768px) {
+  .final-room {
+    height: auto;           /* que crezca según contenido */
+    transform: translateY(0);
+  }
+  .interactive-object {
+    width:  80px;           /* botones un poco más pequeños */
+  }
+  .radio {
+    top: 45%;               /* reajustar posición */
+    left: 65%;
+  }
+  .pipboy {
+    top: 75%;
+    left: 4%;
+  }
+  .mr {
+    top: 20%;
+    left: 30%;
+    width: 220px;           /* más pequeño */
+    animation: levitate 3s ease-in-out infinite;
+  }
+  .popup {
+    width: 80%;             /* popup más estrecho */
+    font-size: 0.9rem;
+  }
+  .pipboy-contenedor,
+  .radio-player-contenedor {
+    padding: 1rem;          /* algo de espacio interno */
+  }
+}
+
+/* ——————— Ultra móvil (muy estrecho) ——————— */
+@media (max-width: 480px) {
+  .interactive-object {
+    width: 60px;
+  }
+  .radio   { top: 40%; left: 60%; }
+  .pipboy  { top: 70%; left: 4%; }
+  .mr      { top: 18%; left: 25%; width: 180px; }
+  .popup   { width: 90%; font-size: 0.8rem; }
+}
+/* Ajustes base para desktop ya los tienes arriba… */
+
+/* Tablet / móvil grande */
+@media (max-width: 768px) {
+  .interactive-object {
+    width: 80px;        /* ya tenías */
+  }
+  /* … otras posiciones ajustadas … */
+}
+
+/* Móvil pequeño */
+@media (max-width: 480px) {
+  .interactive-object {
+    width: 60px;       /* ya tenías */
+  }
+  /* … otras posiciones ajustadas … */
+}
+
+/* Ultra-móvil: pantallas muy estrechas (< 360px) */
+@media (max-width: 360px) {
+  .interactive-object {
+    width: 45px;       /* aún más pequeño */
+  }
+  .radio {
+    top: 40%;
+    left: 55%;
+  }
+  .pipboy {
+    top: 68%;
+    left: 3%;
+  }
+  .mr {
+    top: 15%;
+    left: 22%;
+    width: 140px;     /* reduce también la animación de Mr. Mañoso */
+  }
+  .popup {
+    width: 95%;
+    font-size: 0.75rem;
+    top: 15%;         /* un poco más arriba */
+  }
+  .pipboy-contenedor {
+    padding: 0.5rem;
+  }
+}
+/* ===== Responsive para Samsung A52 (360px aprox) ===== */
+@media only screen 
+  and (min-device-width: 360px) 
+  and (max-device-width: 360px)
+  and (orientation: portrait) {
+  
+  /* Reduce tamaño de los iconos */
+  .interactive-object {
+    width: 50px;
+  }
+
+  /* Ajusta posiciones */
+  .radio {
+    top: 42%;    /* baja un poco */
+    left: 56%;   /* centra mejor */
+  }
+  .pipboy {
+    top: 70%;    /* sube levemente */
+    left: 4%;    /* mantiene margen */
+  }
+  .mr {
+    top: 18%;    /* sube un poco */
+    left: 24%;   /* centra mejor */
+    width: 160px;/* reduce tamaño */
+  }
+
+  /* Popup más estrecho y adaptado */
+  .popup {
+    top: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    font-size: 0.8rem;
+    padding: 1rem;
+  }
+
+  /* El contenedor del PipBoy ajusta padding */
+  .pipboy-contenedor {
+    padding: 0.5rem;
+  }
+}
