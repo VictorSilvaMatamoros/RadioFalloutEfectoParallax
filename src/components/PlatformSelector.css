@@ -1,0 +1,74 @@
+/* src/components/PlatformSelector.css */
+
+.selector-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* ahora controlamos el offset interno */
+  align-items: center;
+
+  /* imagen de fondo centrada y escalada sin recorte */
+  background-image: url("/img/FondoLogin.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-color: #000; /* color de relleno de barras laterales */
+
+  /* marco estilo CRT */
+  border: 8px solid #0f0;
+  border-radius: 8px;
+  box-shadow:
+    inset 0 0 30px rgba(0, 255, 0, 0.6),
+    0 0 20px rgba(0, 255, 0, 0.4);
+
+  overflow: hidden;
+  z-index: 100;
+}
+
+/* efecto de líneas de escaneo */
+.selector-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,255,0,0.05) 0%,
+    rgba(0,255,0,0.05) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+}
+
+/* contenedor para desplazar el contenido un 20% hacia abajo */
+.selector-content {
+  margin-top: 20vh; /* baja todo el mensaje / botones un 20% de la altura */
+  z-index: 1;       /* por encima de las líneas */
+  text-align: center;
+}
+
+/* estilos de los botones */
+.selector-buttons {
+  margin-top: 2rem;
+}
+.selector-buttons button {
+  margin: 1rem;
+  padding: 0.8rem 2rem;
+  font-size: 1.2rem;
+  font-family: 'Orbitron', sans-serif;
+  background: rgba(0,255,0,0.1);
+  border: 2px solid #0f0;
+  color: #0f0;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+.selector-buttons button:hover {
+  background: rgba(0,255,0,0.4);
+  transform: scale(1.05);
+}
+.selector-buttons button:active {
+  transform: scale(0.95);
+}
