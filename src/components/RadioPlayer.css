@@ -1,0 +1,49 @@
+.radio-player {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+.fondo-blur {
+  position: absolute; inset: 0;
+  backdrop-filter: blur(6px);
+  background: rgba(0,0,0,0.6);
+  z-index: -1;
+}
+
+.radio-player h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: #0f0;
+  text-shadow: 0 0 5px #0f0;
+  margin-bottom: 0.2rem;
+}
+.tagline {
+  font-size: 0.9rem;
+  color: #0a0;
+  margin-bottom: 1rem;
+}
+
+.radio-controls button {
+  margin: 0 0.5rem;
+  font-size: 1.5rem;
+  background: transparent;
+  border: none;
+  color: #0f0;
+  cursor: pointer;
+  text-shadow: 0 0 3px #0f0;
+}
+.radio-controls button:hover {
+  filter: brightness(1.4);
+}
+
+.volume-control {
+  margin-top: 1rem;
+  color: #0f0;
+  font-family: 'Courier New', monospace;
+}
+.volume-control input {
+  margin-left: 0.5rem;
+}

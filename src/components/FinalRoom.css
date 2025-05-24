@@ -1,0 +1,129 @@
+.final-room {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+   transform: translateY(10px); 
+}
+
+.room-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: 100 100;
+  z-index: 0;
+}
+
+.interactive-object {
+  position: absolute;
+  width: 120px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.interactive-object:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 10px #00ff00);
+}
+
+.radio {
+  top: 50%;
+  left: 71%;
+}
+
+.pipboy {
+  top: 80%;
+  left: 6%;
+}
+
+.mr {
+  top: 24%;
+  left: 38%;
+  width: 300px;
+  animation: levitate 3s ease-in-out infinite;
+}
+
+
+.popup {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid #00ff00;
+  padding: 1.5rem;
+  color: #00ff00;
+  font-family: 'Orbitron', sans-serif;
+  z-index: 5;
+  width: 60%;
+  text-align: center;
+  text-shadow: 0 0 5px #0f0;
+  border-radius: 12px;
+}
+
+.popup button {
+  background-color: transparent;
+  border: 1px solid #0f0;
+  color: #0f0;
+  font-family: 'Orbitron', sans-serif;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.popup button:hover {
+  background-color: #0f0;
+  color: #000;
+}
+
+
+@keyframes levitate {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
+
+.pipboy-contenedor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: zoomIn 0.6s ease;
+}
+
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.filtro-blur {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}

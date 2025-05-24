@@ -1,0 +1,263 @@
+.parallax-wrapper {
+ min-height: 100vh;
+  width: 100%;
+  overflow: visible;
+  background: black;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.layer-img {
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+@font-face {
+  font-family: 'Overseer';
+  src: url('../fonts/Overseer.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.fallout-text {
+  color: #dff0df;
+  font-size: 4rem;
+  text-align: center;
+  margin-top: 30vh;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.black-section {
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+}
+.neon-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  color: #0ff;
+  text-shadow:
+    0 0 5px #0ff,
+    0 0 10px #0ff,
+    0 0 20px #0ff,
+    0 0 40px #0ff;
+  font-size: 5rem;
+  font-weight: bold;
+  font-family: 'Overseer', sans-serif;
+  letter-spacing: 2px;
+  gap: 2rem;
+  padding-top: 200px;
+  text-align: center;
+  animation: neonPulse 2s infinite ease-in-out;
+}
+
+
+@media (max-width: 900px) {
+  .neon-text {
+    font-size: 3rem;
+    gap: 1rem;
+    padding-top: 120px;
+  }
+}
+
+
+
+.parallax-wrapper > div {
+  
+    
+    background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+
+}
+@media (max-width: 600px) {
+  .neon-text {
+    font-size: 2rem;
+    gap: 0.5rem;
+    padding-top: 60px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@keyframes neonPulse {
+  0% {
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+  }
+  25% {
+    text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
+  }
+  50% {
+    text-shadow: 0 0 25px #00ffff, 0 0 50px #00ffff;
+  }
+  75% {
+    text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
+  }
+  100% {
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+  }
+}
+
+.neon-text-zone {
+  animation: neonPulse 2s infinite ease-in-out;
+  font-family: 'Orbitron', sans-serif;
+}
+.monster-img {
+  transition: filter 0.3s ease;
+  cursor: pointer; /* Opcional para que se note que es interactivo */
+}
+
+.robot-img:hover {
+  filter: brightness(1.2) saturate(2) hue-rotate(100deg) drop-shadow(0 0 5px #0f0);
+  cursor: url('/img/CursorVats.png'), pointer;
+}
+
+
+
+.cueva-bg {
+  width: 100vw;
+  height: 120vh;
+  background-image: url('/img/cueva.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0.8);
+  transform: translateY(-63vh); /* Más arriba */
+  transition: transform 0.3s ease-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  margin-bottom: 20px;
+}
+
+
+
+
+
+
+.robots-section {
+  background-color: rgb(0, 0, 0);
+  position: relative;
+  top: 360px;
+  width: 100vw;
+  height: 150vh;
+  overflow: hidden;
+}
+
+/* Fondo de la sección */
+.robots-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* Imagen del robot */
+.robot-img {
+  position: absolute;
+  width: 400px;
+  bottom: 30%;
+  right: 10%;
+  z-index: 1;
+  animation: robotIdle 2s ease-in-out infinite;
+}
+
+
+
+/* Láser animado */
+.laser-beam {
+  position: absolute;
+  width: 150px;
+  top: 49%;
+  right: 22%;
+  z-index: 2;
+  animation: laserShot 2s linear infinite;
+  transform-origin: top right;
+}
+
+/* Movimiento del robot (puedes personalizar) */
+@keyframes robotIdle {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Disparo del láser hacia la esquina inferior izquierda */
+@keyframes laserShot {
+  0% {
+    transform: translate(0, 0) scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-600px, 300px) scaleX(1.2);
+    opacity: 0;
+  }
+}
+
+
+.go-to-final {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  background-color: rgba(0, 255, 0, 0.1);
+  color: #00ff00;
+  padding: 0.6rem 1rem;
+  border: 2px solid #00ff00;
+  border-radius: 10px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  z-index: 999;
+  cursor: pointer;
+  text-shadow: 0 0 5px #0f0;
+  transition: all 0.3s ease;
+}
+
+.go-to-final:hover {
+  background-color: rgba(0, 255, 0, 0.3);
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+
+
+/* ✴️ SANGUINARIO - Respiración lenta */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+.sanguinario {
+  animation: breathe 5s ease-in-out infinite;
+}
+
+/* 🪰 MOSCA - Vibración rápida */
+@keyframes vibrate {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(1px); }
+  50% { transform: translateX(-1px); }
+  75% { transform: translateX(1px); }
+}
+.mosca {
+  animation: vibrate 0.2s infinite;
+}
+
+/* 🧪 CENTAURO - brillo/latido radiactivo */
+@keyframes pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.8); }
+}
+.centauro {
+  animation: pulse 2.5s ease-in-out infinite;
+}
