@@ -1,7 +1,7 @@
 // src/components/MobileView.jsx
 import React, { useState } from "react";
 import "./MobileView.css";
-import LogicaReproductor from "./LogicaReproductor";
+import LogicaReproductor from "../components/LogicaReproductor";
 
 export default function MobileView() {
   const [open, setOpen] = useState(true);

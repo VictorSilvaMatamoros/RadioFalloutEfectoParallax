@@ -1,11 +1,11 @@
 // src/App.jsx
 import React, { useEffect, useState } from "react";
-import PlatformSelector from "./components/PlatformSelector";
 import ParallaxSection from "./components/ParallaxSection";
 import FinalRoom from "./components/FinalRoom";
+import TVLogin3D from "./components/TVLogin3D";
 
 function App() {
-  // 1️⃣ Selección de plataforma
+  // 1️⃣ Plataforma elegida tras el “login 3D”
   const [platform, setPlatform] = useState(null); // 'desktop' | 'mobile'
 
   // 2️⃣ Lógica de audio
@@ -24,6 +24,7 @@ function App() {
           .then(() => setIsPlaying(true))
           .catch((e) => console.warn("Audio bloqueado:", e));
       }
+      // desregistramos los eventos
       window.removeEventListener("click", startAudio);
       window.removeEventListener("scroll", startAudio);
       window.removeEventListener("wheel", startAudio);
@@ -37,9 +38,7 @@ function App() {
     window.addEventListener("touchstart", startAudio);
     window.addEventListener("keydown", startAudio);
 
-    return () => {
-      audio.pause();
-    };
+    return () => audio.pause();
   }, [audio, userHasInteracted]);
 
   const toggleAudio = () => {
@@ -52,12 +51,18 @@ function App() {
     }
   };
 
-  // 3️⃣ Antes de elegir plataforma, mostramos selector
+  // 3️⃣ Si no hay plataforma elegida, mostramos la TV 3D con links
   if (!platform) {
-    return <PlatformSelector onSelect={setPlatform} />;
+    const links = [
+      { label: "Ver en Desktop", href: "desktop" },
+      { label: "Ver en Móvil", href: "mobile" },
+    ];
+
+    // TVLogin3D llamará a onSelect con "desktop" o "mobile"
+    return <TVLogin3D links={links} onSelect={setPlatform} />;
   }
 
-  // 4️⃣ Renderizamos toggle + experiencia según plataforma
+  // 4️⃣ Una vez seleccionada, renderizamos la experiencia
   return (
     <>
       {userHasInteracted && (
@@ -68,7 +73,6 @@ function App() {
       {platform === "desktop" ? (
         <ParallaxSection />
       ) : (
-        // Aquí cambiamos para móvil:
         <FinalRoom />
       )}
     </>

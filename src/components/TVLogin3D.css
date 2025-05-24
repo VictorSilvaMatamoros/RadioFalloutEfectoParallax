@@ -1,0 +1,32 @@
+/* src/components/TVLogin3D.css */
+.tv-login-container {
+  width: 100vw;
+  height: 100vh;
+  background: #333232;
+  overflow: hidden;
+}
+
+.tv-login-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.tv-login-buttons button {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  color: #0f0;
+  background: rgba(0, 255, 0, 0.1);
+  border: 2px solid #0f0;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.tv-login-buttons button:hover {
+  background: rgba(0, 255, 0, 0.4);
+}
