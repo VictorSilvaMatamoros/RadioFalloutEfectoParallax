@@ -1,0 +1,111 @@
+/* src/components/FinalRoomMobile.css */
+
+.final-mobile-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Fondo difuminado */
+.mobile-blur-bg {
+  position: absolute;
+  inset: 0;
+  background: url("/img/Habitacion.jpg") center/cover no-repeat;
+  z-index: 0;
+}
+
+/* Mr. Mañoso */
+.mobile-mr {
+  position: absolute;
+  bottom: 20.5rem;   /* puedes ajustar */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 340px;
+  z-index: 2;
+  cursor: pointer;
+  animation: levitate 3s ease-in-out infinite;
+  transition: filter 0.2s;
+}
+
+/* Hover verde en Mr. Mañoso */
+.mobile-mr:hover {
+  filter: drop-shadow(0 0 8px #0f0);
+}
+
+/* Botón “volver al inicio” */
+.mobile-restart {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(0,255,0,0.2);
+  border: 2px solid #0f0;
+  color: #0f0;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  z-index: 2;
+}
+
+/* Overlay para Pip-Boy o Radio */
+.mobile-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+/* Contenedor general de acciones */
+.mobile-actions {
+  position: absolute;
+  bottom: 2rem;
+  width: 100%;
+  height: 60px; /* sólo para referencia */
+  z-index: 2;
+  pointer-events: none; /* para que sólo actúen los iconos */
+}
+
+/* Radio icon */
+.radio-icon {
+  position: absolute;
+  bottom: 45%;
+  right: 20%;
+  width: 100px;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+  pointer-events: auto;
+}
+.radio-icon:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px #0f0);
+}
+
+/* Pip-Boy icon */
+.pipboy-icon {
+  position: absolute;
+  bottom: 45%;
+  left: 10%;
+  width: 80px;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+  pointer-events: auto;
+}
+.pipboy-icon:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px #0f0);
+}
+
+@keyframes levitate {
+  0%,100% { transform: translate(-50%, 0); }
+  50%    { transform: translate(-50%, -8px); }
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 360px) {
+  .mobile-mr { width: 240px; bottom: 15rem; }
+  .radio-icon,
+  .pipboy-icon { width: 80px; }
+  .mobile-restart { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+}

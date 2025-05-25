@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import ParallaxSection from "./components/ParallaxSection";
 import FinalRoom from "./components/FinalRoom";
+import FinalRoomMobile from "./components/FinalRoomMobile";
 import TVLogin3D from "./components/TVLogin3D";
 
 function App() {
@@ -71,10 +72,11 @@ function App() {
         </div>
       )}
       {platform === "desktop" ? (
-        <ParallaxSection />
-      ) : (
-        <FinalRoom />
-      )}
+      // Le pasamos onRestart para que FinalRoom dentro del Parallax también lo reciba
+       <ParallaxSection onRestart={() => setPlatform(null)} />
+    ) : (
+      <FinalRoomMobile onRestart={() => setPlatform(null)} />
+     )}
     </>
   );
 }

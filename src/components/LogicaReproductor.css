@@ -150,3 +150,175 @@
   animation: crt-scan 0.4s ease-out;
   transform-origin: top;
 }
+/* LogicaReproductor.css (añade al final del archivo) */
+
+/* == Media query para móviles pequeños (p.ej. Samsung A52, ancho ≤ 480px) == */
+@media (max-width: 480px) {
+  .pipboy-reproductor {
+    width: 100vw;
+    max-width: none;
+    height: auto;
+    padding: 0 1rem;
+  }
+
+  .pipboy-fondo {
+    width: 100%;
+  }
+
+  .pantalla-terminal {
+    top: 20%;
+    left: 50%;
+    width: 80vw;
+    height: 30vh;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    padding: 0.5rem;
+  }
+
+  .cerrar {
+    top: 2%;
+    right: 4%;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+
+  .botones-fisicos {
+    bottom: 10%;
+    left: 50%;
+    width: 80vw;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-around;
+    padding: 0;
+  }
+
+  .boton {
+    width: 24px;
+    height: 24px;
+  }
+
+  .boton.rojo {
+    bottom: 80px;
+    left: 30%;
+  }
+  .boton.azul {
+    bottom: 80px;
+    left: 50%;
+  }
+  .boton.verde {
+    bottom: 80px;
+    left: 70%;
+  }
+
+  .nombre-radio {
+    font-size: 1rem;
+  }
+}
+
+/* == Media query para tablets (ancho ≤ 768px) == */
+@media (max-width: 768px) {
+  .pipboy-reproductor {
+    width: 95vw;
+    max-width: 500px;
+  }
+
+  .pantalla-terminal {
+    top: 22%;
+    left: 55%;
+    width: 30vw;
+    height: 20vh;
+    transform: translateX(-50%);
+    font-size: 0.85rem;
+  }
+
+  .botones-fisicos {
+    bottom: 14%;
+    left: 50%;
+    width: 70vw;
+    transform: translateX(-50%);
+  }
+
+  .boton {
+    width: 26px;
+    height: 26px;
+  }
+
+  .boton.rojo {
+    bottom: 100px;
+    left: 45%;
+  }
+  .boton.azul {
+    bottom: 100px;
+    left: 53%;
+  }
+  .boton.verde {
+    bottom: 100px;
+        left: 68%;  }
+
+  .cerrar {
+    top: 4%;
+    right: 5%;
+  }
+
+  .nombre-radio {
+    font-size: 1.05rem;
+  }
+}
+
+/* Ajustes extra para móviles muy pequeños (hasta 360px) */
+@media (max-width: 360px) {
+  .pipboy-reproductor {
+    width: 100vw;
+    max-width: 100%;
+  }
+
+  .pantalla-terminal {
+    top: 28%;
+    left: 55%;
+    width: 160px;
+    height: 28%;
+    font-size: 0.8rem;
+    padding: 0.8rem;
+  }
+
+  .pantalla-terminal input[type="range"] {
+    width: 70%;
+  }
+
+  .cerrar {
+    top: 4%;
+    right: 4%;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+
+  .botones-fisicos {
+    bottom: 2%;
+    left: 50%;
+    width: 44%;
+  }
+
+  .boton {
+    width: 24px;
+    height: 24px;
+  }
+
+  .boton.rojo {
+    bottom: 100px;
+    left: 38%;
+  }
+
+  .boton.azul {
+    bottom: 100px;
+    right: 28%;
+  }
+
+  .boton.verde {
+    bottom: 100px;
+    right: 26px;
+  }
+
+  .nombre-radio {
+    font-size: 1rem;
+  }
+}

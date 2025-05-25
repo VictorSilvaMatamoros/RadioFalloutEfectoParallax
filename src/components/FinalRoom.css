@@ -276,3 +276,24 @@
     padding: 0.5rem;
   }
 }
+/* src/components/FinalRoom.css */
+
+/* … tus estilos existentes … */
+
+.volver-inicio {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: rgba(0, 255, 0, 0.8);
+  color: #000;
+  border: none;
+  padding: 0.6rem 1rem;
+  font-family: 'Orbitron', sans-serif;
+  cursor: pointer;
+  border-radius: 6px;
+  text-shadow: none;
+  transition: background 0.3s;
+}
+.volver-inicio:hover {
+  background: #0f0;
+}

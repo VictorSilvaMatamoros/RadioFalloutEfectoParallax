@@ -4,7 +4,7 @@ import "./ParallaxSection.css";
 import RobotGallery from "./RobotGallery";
 import FinalRoom from "./FinalRoom";
 
-const ParallaxSection = () => {
+const ParallaxSection = ({ onRestart }) => {
   const parallaxRef = useRef(null);
   const [scrollY, setScrollY] = useState(0);
 const [paginaActual, setPaginaActual] = useState(0);
@@ -199,8 +199,8 @@ setPaginaActual(currentPage);
           <RobotGallery scrollY={scrollYSection3} />
         </ParallaxLayer>
 
-        <ParallaxLayer offset={3} speed={0.4} style={{ height: "150vh" }}>
-          <FinalRoom />
+       <ParallaxLayer offset={3} speed={0.4} style={{ height: "150vh" }}>
+          <FinalRoom onRestart={onRestart} />
         </ParallaxLayer>
       </Parallax>
     {paginaActual < 3 && (

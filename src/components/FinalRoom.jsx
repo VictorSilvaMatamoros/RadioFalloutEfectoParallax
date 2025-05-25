@@ -4,7 +4,8 @@ import "./FinalRoom.css";
 import LogicaReproductor from "./LogicaReproductor";
 import RadioPlayer from "./RadioPlayer";
 
-const FinalRoom = () => {
+const FinalRoom = ({ onRestart }) => {
+
   const [mostrarPipBoy, setMostrarPipBoy] = useState(false);
   const [mostrarRadio, setMostrarRadio] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
@@ -58,6 +59,13 @@ const FinalRoom = () => {
           <button onClick={() => setShowPopup(false)}>Cerrar</button>
         </div>
       )}
+
+
+   {/* 🚪 Botón para volver al login 3D */}
+      <button className="volver-inicio" onClick={onRestart}>
+        ← Volver al inicio
+      </button>
+
     </div>
   );
 };
