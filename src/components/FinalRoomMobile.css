@@ -133,15 +133,15 @@
   .pantalla-terminal {
     top: 22%;
     left: 55%;
-    width: 100px;
-    height: 35%;
+    width: 120px;
+    height: 42%;
     font-size: 0.5rem;
     padding: 0.1rem;
   }
 
 
   .botones-fisicos {
-    bottom: -7%;
+    bottom: -12%;
     left: 50%;
     width: 40%;
   }
