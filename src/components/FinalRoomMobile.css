@@ -1,5 +1,6 @@
-/* src/components/FinalRoomMobile.css */
-
+/* ============================= */
+/* FinalRoomMobile Responsivo    */
+/* ============================= */
 .final-mobile-container {
   position: relative;
   width: 100vw;
@@ -22,14 +23,12 @@
   bottom: 20.5rem;   /* puedes ajustar */
   left: 50%;
   transform: translateX(-50%);
-  width: 340px;
+  width: 240px;
   z-index: 2;
   cursor: pointer;
   animation: levitate 3s ease-in-out infinite;
   transition: filter 0.2s;
 }
-
-/* Hover verde en Mr. Mañoso */
 .mobile-mr:hover {
   filter: drop-shadow(0 0 8px #0f0);
 }
@@ -57,20 +56,18 @@
   z-index: 10;
 }
 
-/* Contenedor general de acciones */
+/* Contenedor general de acciones (para posicionar íconos) */
 .mobile-actions {
   position: absolute;
-  bottom: 2rem;
-  width: 100%;
-  height: 60px; /* sólo para referencia */
+  inset: 0;
   z-index: 2;
-  pointer-events: none; /* para que sólo actúen los iconos */
+  pointer-events: none; /* Los íconos capturan el evento */
 }
 
-/* Radio icon */
+/* Icono Radio */
 .radio-icon {
   position: absolute;
-  bottom: 45%;
+  bottom:5%;
   right: 20%;
   width: 100px;
   cursor: pointer;
@@ -82,7 +79,7 @@
   filter: drop-shadow(0 0 8px #0f0);
 }
 
-/* Pip-Boy icon */
+/* Icono Pip-Boy */
 .pipboy-icon {
   position: absolute;
   bottom: 45%;
@@ -98,14 +95,148 @@
 }
 
 @keyframes levitate {
-  0%,100% { transform: translate(-50%, 0); }
-  50%    { transform: translate(-50%, -8px); }
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, -8px); }
 }
 
-/* Ajustes para pantallas muy pequeñas */
+/* —————————————————————— */
+/* Móvil grande ≤ 480px    */
+/* —————————————————————— */
+@media (max-width: 480px) {
+  .mobile-mr {
+    width: 240px;
+    bottom: 26rem;
+  }
+  .radio-icon {
+    width: 120px;
+    bottom: 10%;
+    right: 18%;
+  }
+  .pipboy-icon {
+    width: 80px;
+    bottom: 10%;
+    left: 12%;
+  }
+  .mobile-restart {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  /* — Ajustes Pip-Boy — */
+  .pipboy-reproductor {
+    width: 90vw;
+    max-width: 280px;
+  }
+  .pipboy-fondo {
+    width: 100%;
+  }
+  .pantalla-terminal {
+    top: 22%;
+    left: 55%;
+    width: 100px;
+    height: 35%;
+    font-size: 0.5rem;
+    padding: 0.1rem;
+  }
+
+
+  .botones-fisicos {
+    bottom: -7%;
+    left: 50%;
+    width: 40%;
+  }
+  .boton.rojo {
+    bottom: 98px;
+    left: 38%;
+    width: 20px;
+    height: 20px;
+  }
+  .boton.azul {
+    bottom: 98px;
+    right: 32%;
+    width: 20px;
+    height: 20px;
+  }
+  .boton.verde {
+    bottom: 98px;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+  }
+  .mobile-overlay .radio-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Reduce un poco el tamaño del título */
+  .mobile-overlay .radio-player h2 {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  /* Etiqueta de volumen justo bajo el título */
+  .mobile-overlay .radio-player label {
+    order: 1;
+    margin: 0.2rem 0 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  /* Controles de play/pause y demás, reubicados tras el slider */
+  .mobile-overlay .radio-player .radio-controls {
+    order: 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+}
+
+
+/* —————————————————————— */
+/* Móvil muy estrecho ≤ 360px */
+/* —————————————————————— */
 @media (max-width: 360px) {
-  .mobile-mr { width: 240px; bottom: 15rem; }
-  .radio-icon,
-  .pipboy-icon { width: 80px; }
-  .mobile-restart { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+  .mobile-mr {
+    width: 180px;
+    bottom: 16rem;
+  }
+  .radio-icon {
+    width: 70px;
+    bottom: 48%;
+    right: 16%;
+  }
+  .pipboy-icon {
+    width: 60px;
+    bottom: 48%;
+    left: 14%;
+  }
+  .mobile-restart {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* —————————————————————— */
+/* Ultra-móvil ≤ 320px      */
+/* —————————————————————— */
+@media (max-width: 320px) {
+  .mobile-mr {
+    width: 150px;
+    bottom: 14rem;
+  }
+  .radio-icon {
+    width: 60px;
+    bottom: 46%;
+    right: 14%;
+  }
+  .pipboy-icon {
+    width: 50px;
+    bottom: 46%;
+    left: 16%;
+  }
+  .mobile-restart {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+  }
 }
