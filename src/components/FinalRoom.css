@@ -165,7 +165,7 @@
     left: 4%;
   }
   .mr {
-    top: 10%;
+    top: 20%;
     left: 30%;
     width: 220px;           /* más pequeño */
     animation: levitate 3s ease-in-out infinite;
@@ -222,7 +222,7 @@
     left: 3%;
   }
   .mr {
-    top: 10%;
+    top: 20%;
     left: 22%;
     width: 140px;     /* reduce también la animación de Mr. Mañoso */
   }
@@ -256,7 +256,7 @@
     left: 4%;    /* mantiene margen */
   }
   .mr {
-    top: 10%;    /* sube un poco */
+    top: 22%;    /* sube un poco */
     left: 24%;   /* centra mejor */
     width: 160px;/* reduce tamaño */
   }
