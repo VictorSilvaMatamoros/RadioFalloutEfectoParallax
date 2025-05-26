@@ -36,8 +36,8 @@
 
 .cerrar {
   position: absolute;
-  top: 5%;
-  right: 6%;
+  top: 25%;
+  right:22%;
   background: none;
   border: 1px solid #0f0;
   color: #0f0;
@@ -321,4 +321,15 @@
   .nombre-radio {
     font-size: 1rem;
   }
+}
+/* Etiqueta encima del slider de volumen */
+.volumen-label {
+  margin-top: 20px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  color: #00ff00;
+  text-shadow: 0 0 3px rgb(40, 136, 40);
+  margin-bottom: 0.3rem;
+  display: block;
+  text-align: center;
 }

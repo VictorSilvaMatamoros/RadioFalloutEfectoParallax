@@ -1,87 +1,71 @@
 // src/components/RadioPlayer.jsx
-import React, { useState, useRef, useEffect } from "react";
-import { useRadioBrowser } from "./useRadioBrowser";
+import React, { useRef, useState, useEffect } from "react";
+import { useRadioBrowser } from "./useRadioBrowser"
 import "./RadioPlayer.css";
 
 export default function RadioPlayer({ onClose }) {
-  const { stations, loading } = useRadioBrowser({ country: "ES", limit: 30 });
-  const [index, setIndex] = useState(0);
+  const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
+  const [currentIdx, setCurrentIdx] = useState(0);
   const [volume, setVolume] = useState(0.5);
-  const audioRef = useRef();
 
-  // Cuando cambie de estación, recarga el audio
+  const { stations, loading } = useRadioBrowser({ country: "ES", limit: 50, tag: "music" });
+
+  // Al cambiar emisora o volumen, actualiza audio
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.load();
-      if (playing) audioRef.current.play().catch(() => {});
-    }
-  }, [index]);
+    if (!audioRef.current || !stations.length) return;
+    audioRef.current.src = stations[currentIdx].url_resolved;
+    audioRef.current.volume = volume;
+    if (playing) audioRef.current.play().catch(() => {});
+  }, [currentIdx, stations, volume, playing]);
 
-  const station = stations[index] || {};
-
-  const handlePlayPause = () => {
+  const togglePlay = () => {
     if (!audioRef.current) return;
-    if (playing) {
-      audioRef.current.pause();
-      setPlaying(false);
-    } else {
-      audioRef.current.volume = volume;
-      audioRef.current.play().then(() => setPlaying(true)).catch(() => {
-        console.warn("Usuario debe interactuar primero");
-      });
-    }
+    playing ? audioRef.current.pause() : audioRef.current.play().catch(() => {});
+    setPlaying(!playing);
   };
 
-  const handleNext = () => {
-    setPlaying(false);
-    setIndex((i) => (i + 1) % stations.length);
-  };
-  const handlePrev = () => {
-    setPlaying(false);
-    setIndex((i) => (i - 1 + stations.length) % stations.length);
-  };
+  const prevStation = () =>
+    setCurrentIdx((i) => (stations.length ? (i - 1 + stations.length) % stations.length : 0));
+  const nextStation = () =>
+    setCurrentIdx((i) => (stations.length ? (i + 1) % stations.length : 0));
 
-  if (loading) return <div className="radio-player">Cargando emisoras…</div>;
-  if (!station.name) return <div className="radio-player">No hay emisoras.</div>;
+  if (loading) return <div className="radio-loading">Cargando emisoras…</div>;
+  if (!stations.length) return <div className="radio-empty">No hay emisoras</div>;
+
+  const current = stations[currentIdx];
 
   return (
-    <div className="radio-player">
-      {/* Fondo difuminado */}
-      <div className="fondo-blur" />
+<>
+  <div className="radio-backdrop" />
+  <div className="radio-container">
+    <img src="/img/radio.png" alt="Radio" className="radio-bg" />
 
-      <h2>📻 {station.name}</h2>
-      <p className="tagline">{station.tags?.split(",")[0]}</p>
+    <div className="station-title">{current.name}</div>
 
-      <div className="radio-controls">
-        <button onClick={handlePrev}>⏮️</button>
-        <button onClick={handlePlayPause}>
-          {playing ? "⏸️" : "▶️"}
-        </button>
-        <button onClick={handleNext}>⏭️</button>
-        <button onClick={onClose}>❌</button>
-      </div>
+    <button className="prev-btn" onClick={prevStation}>⏮️</button>
+    <button className="play-btn" onClick={togglePlay}>
+      {playing ? '⏸️' : '▶️'}
+    </button>
+    <button className="next-btn" onClick={nextStation}>⏭️</button>
 
-      <div className="volume-control">
-        Volumen
-        <input
-          type="range"
-          min="0"
-          max="1"
-          step="0.01"
-          value={volume}
-          onChange={(e) => {
-            const v = parseFloat(e.target.value);
-            setVolume(v);
-            if (audioRef.current) audioRef.current.volume = v;
-          }}
-        />
-      </div>
-
-      <audio ref={audioRef}>
-        <source src={station.url_resolved || station.url} type="audio/mpeg" />
-      </audio>
+    <div className="volume-control">
+      <label htmlFor="volumen">Volumen</label>
+      <input
+        id="volumen"
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value={volume}
+        onChange={e => setVolume(parseFloat(e.target.value))}
+      />
     </div>
+
+    <button className="close-btn" onClick={onClose}>❌</button>
+
+    <audio ref={audioRef} onEnded={nextStation} />
+  </div>
+</>
   );
 }

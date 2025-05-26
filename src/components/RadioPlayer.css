@@ -1,49 +1,152 @@
-.radio-player {
-  position: absolute;
+/* Fondo difuminado */
+.radio-backdrop {
+  position: fixed;
   inset: 0;
+  backdrop-filter: blur(6px);
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+}
+
+/* Contenedor principal */
+.radio-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  z-index: 1000;
+  text-align: center;
+}
+
+/* Imagen de la radio */
+.radio-bg {
+  width: 600px;
+  max-width: 80vw;
+  display: block;
+  margin: 0 auto;
+  position: relative; /* para que los botones absolutos se anclen aquí */
+}
+
+/* Título de la emisora */
+.station-title {
+  color: #00ff00;
+  font-family: 'Orbitron', sans-serif;
+  margin: 0.5rem 0;
+  margin-top: -1.5rem; /* ajusta hacia arriba si fuera necesario */
+  position: relative;
+  z-index: 1;
+}
+
+/* Controles sobre la radio (prev, play, next) */
+.prev-btn,
+.play-btn,
+.next-btn {
+  position: absolute;
+  color: #0f0;             /* flecha verde */
+  font-size: 1.2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 200;
-}
-.fondo-blur {
-  position: absolute; inset: 0;
-  backdrop-filter: blur(6px);
-  background: rgba(0,0,0,0.6);
-  z-index: -1;
-}
-
-.radio-player h2 {
-  font-family: 'Orbitron', sans-serif;
-  color: #0f0;
-  text-shadow: 0 0 5px #0f0;
-  margin-bottom: 0.2rem;
-}
-.tagline {
-  font-size: 0.9rem;
-  color: #0a0;
-  margin-bottom: 1rem;
-}
-
-.radio-controls button {
-  margin: 0 0.5rem;
-  font-size: 1.5rem;
-  background: transparent;
-  border: none;
-  color: #0f0;
   cursor: pointer;
-  text-shadow: 0 0 3px #0f0;
-}
-.radio-controls button:hover {
-  filter: brightness(1.4);
+  transition: background 0.2s;
 }
 
-.volume-control {
-  margin-top: 1rem;
-  color: #0f0;
-  font-family: 'Courier New', monospace;
+/* Retroceder: sobre la perilla izquierda */
+.prev-btn {
+  top: 55%;      /* aprox centro vertical de la perilla */
+  left: 28%;     /* ajusta hasta alinearlo con la flecha verde del dibujo */
+  transform: translate(-50%, -50%);
 }
-.volume-control input {
-  margin-left: 0.5rem;
+
+/* Play/Pausa: sobre el botón central */
+.play-btn {
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Avanzar: sobre la perilla derecha */
+.next-btn {
+  top: 55%;
+  left: 72%;
+  transform: translate(-50%, -50%);
+}
+
+/* Hover suave para los botones */
+.prev-btn:hover,
+.play-btn:hover,
+.next-btn:hover {
+  background: #0f0;
+  color: #000;
+}
+
+/* Botón de cerrar (X) debajo de la radio, en negro */
+.close-btn {
+  position: absolute;
+  top: 20%;  /* justo debajo de la imagen */
+  left: 67%;
+  transform: translateX(-50%);
+  background: #00000000;         /* fondo negro */
+  color: #0f0;
+  font-size: 1.5rem;
+  rotate: 10deg;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  z-index: 1;
+}
+
+.close-btn:hover {
+  background: #0f0;
+  color: #000;
+}
+
+/* Volumen: barra en rojo, con etiqueta “Volumen” */
+.volume-control {
+  position: absolute;
+  bottom: -3.5rem;        /* ajusta para que quede en línea roja del dibujo */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;             /* ancho de la barra */
+  max-width: 300px;
+  text-align: left;
+  color: rgb(6, 188, 12);            /* etiqueta en rojo */
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+}
+
+/* Input range (la propia barra) */
+.volume-control input[type="range"] {
+  width: 100%;
+  margin-top: 0.3rem;
+}
+
+/* Responsive pequeño */
+@media (max-width: 480px) {
+  .radio-bg {
+    width: 80vw;
+  }
+  .prev-btn,
+  .play-btn,
+  .next-btn {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+  .close-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.2rem;
+  }
+  .volume-control {
+    bottom: -3rem;
+    width: 70%;
+    font-size: 0.8rem;
+  }
 }

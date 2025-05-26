@@ -68,7 +68,7 @@ function App() {
     <>
       {userHasInteracted && (
         <div className="music-toggle" onClick={toggleAudio}>
-          {isPlaying ? "🔇 Mute" : "🔊 Play"}
+          {isPlaying ? "🔇 Silenciar Música ambiente" : "🔊 Música ambiente"}
         </div>
       )}
       {platform === "desktop" ? (
