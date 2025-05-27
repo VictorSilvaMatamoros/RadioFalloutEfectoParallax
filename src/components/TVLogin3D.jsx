@@ -1,15 +1,16 @@
 // src/components/TVLogin3D.jsx
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Html } from "@react-three/drei";
+import { supabase } from "../lib/supabaseClient"; // Asegúrate de tener este archivo
 import "./TVLogin3D.css";
 
-function TVScene({ links, onSelect }) {
+function TVScene({ links, onSelect, onLogout, session }) {
   const tv = useGLTF("/models/fallout_television_set.glb");
 
   return (
     <>
-      {/* Modelo de la TV mirando hacia la cámara */}
+      {/* Modelo de la TV */}
       <primitive
         object={tv.scene}
         scale={0.2}
@@ -27,10 +28,10 @@ function TVScene({ links, onSelect }) {
         shadow-mapSize-height={1024}
       />
 
-      {/* Controles opcionales */}
+      {/* Controles */}
       <OrbitControls enablePan={false} enableZoom={true} />
 
-      {/* Botones sobre la “pantalla” de la TV */}
+      {/* Botones sobre la TV */}
       <Html
         transform
         occlude
@@ -44,6 +45,12 @@ function TVScene({ links, onSelect }) {
               {link.label}
             </button>
           ))}
+          {/* Mostrar botón de cerrar sesión si hay sesión activa */}
+          {session && (
+            <button className="logout-btn" onClick={onLogout}>
+              Cerrar sesión
+            </button>
+          )}
         </div>
       </Html>
     </>
@@ -51,11 +58,39 @@ function TVScene({ links, onSelect }) {
 }
 
 export default function TVLogin3D({ links, onSelect }) {
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    // Obtenemos la sesión al cargar
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+    });
+
+    // Escuchamos cambios en la sesión
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => {
+      listener.subscription.unsubscribe();
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setSession(null);
+  };
+
   return (
     <div className="tv-login-container">
       <Canvas camera={{ position: [8, 3, 18], fov: 50 }}>
         <Suspense fallback={null}>
-          <TVScene links={links} onSelect={onSelect} />
+          <TVScene
+            links={links}
+            onSelect={onSelect}
+            onLogout={handleLogout}
+            session={session}
+          />
         </Suspense>
       </Canvas>
     </div>

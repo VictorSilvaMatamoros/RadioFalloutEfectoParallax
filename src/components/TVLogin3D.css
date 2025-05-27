@@ -30,3 +30,17 @@
 .tv-login-buttons button:hover {
   background: rgba(0, 255, 0, 0.4);
 }
+.logout-btn {
+  margin-top: 1rem;
+  padding: 0.4rem 1rem;
+  background: rgba(255, 0, 0, 0.2);
+  border: 2px solid red;
+  color: red;
+  font-family: 'Orbitron', sans-serif;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.logout-btn:hover {
+  background: red;
+  color: white;
+}

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./LogicaReproductor.css";
+import { addFavorite } from '../lib/favorites';
+import { supabase } from "../lib/supabaseClient";
 
 const playlists = {
   fallout3: [
@@ -350,12 +352,41 @@ function LogicaReproductor({ onClose }) {
   const [juego, setJuego] = useState("fallout3");
   const [cancionActual, setCancionActual] = useState(0);
   const [volumen, setVolumen] = useState(0.5);
+  const [user, setUser] = useState(null);
+  const [favoritos, setFavoritos] = useState([]);
   const audioRef = useRef(null);
 
+  const canciones = playlists[juego];
+  const cancion = canciones[cancionActual];
+
+ useEffect(() => {
+    const fetchUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (data?.user) setUser(data.user);
+      else console.error("Error al obtener el usuario:", error);
+    };
+    fetchUser();
+  }, []);
+
   useEffect(() => {
+    if (!user) return;
+    const fetchFavoritos = async () => {
+      const { data, error } = await supabase
+        .from("favorites")
+        .select("song_url, song_title")
+        .eq("user_id", user.id);
+
+      if (error) console.error("Error al cargar favoritos:", error);
+      else setFavoritos(data);
+    };
+    fetchFavoritos();
+  }, [user]);
+
+
+ useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volumen;
-      audioRef.current.play().catch(() => {}); // evita error si no hay interacción
+      audioRef.current.play().catch(() => {});
     }
   }, [cancionActual, juego]);
 
@@ -365,27 +396,23 @@ function LogicaReproductor({ onClose }) {
     }
   }, [volumen]);
 
-  const canciones = playlists[juego];
-  const cancion = canciones[cancionActual];
-
   const cambiarJuego = (nuevoJuego) => {
     // 🔊 Reproducir sonido aleatorio
     const efectos = [
       "/efectosAudio/cambioEmisora.mp3",
       "/efectosAudio/cambioEmisora2.mp3",
     ];
-    const efectoElegido = efectos[Math.floor(Math.random() * efectos.length)];
-    const audioEfecto = new Audio(efectoElegido);
-    audioEfecto.play().catch(() => {}); // evitar error si aún no hubo interacción
 
-    // Cambiar playlist
+
+
+    const efectoElegido = new Audio(efectos[Math.floor(Math.random() * efectos.length)]);
+    efectoElegido.play().catch(() => {});
+
     setJuego(nuevoJuego);
-    const indiceAleatorio = Math.floor(
-      Math.random() * playlists[nuevoJuego].length
-    );
+    const indiceAleatorio = Math.floor(Math.random() * playlists[nuevoJuego].length);
     setCancionActual(indiceAleatorio);
 
-    // Asegurar reproducción tras cambio
+
     setTimeout(() => {
       if (audioRef.current) {
         audioRef.current.play().catch(() => {});
@@ -393,19 +420,54 @@ function LogicaReproductor({ onClose }) {
     }, 100);
   };
 
-  return (
+
+ const reproducirFavoritoAleatorio = () => {
+    if (!favoritos.length) {
+      alert("No tienes canciones favoritas aún.");
+      return;
+    }
+
+    const aleatoria = favoritos[Math.floor(Math.random() * favoritos.length)];
+    const audio = new Audio(aleatoria.song_url);
+    audio.volume = volumen;
+    audio.play().catch(() => {});
+  };
+
+
+ return (
     <div className="pipboy-reproductor">
       <img src="/img/PipBoy_Uso.png" alt="PipBoy" className="pipboy-fondo" />
 
       <div className="pantalla-terminal">
         <h2 className="nombre-radio">{nombreEmisoras[juego]}</h2>
-
         <h3>{cancion.titulo}</h3>
         <p>{cancion.artista}</p>
 
-         <label htmlFor="volumen-slider" className="volumen-label">
-    Volumen
-  </label>
+        <button
+          className="fav-btn"
+          onClick={() => {
+            if (!user) return alert("Debes iniciar sesión para añadir favoritos.");
+            addFavorite({
+              userId: user.id,
+              url: cancion.url,
+              title: cancion.titulo,
+            });
+          }}
+        >
+          ❤
+        </button>
+
+        <button
+          className="fav-btn"
+          onClick={reproducirFavoritoAleatorio}
+          style={{ marginTop: "10px" }}
+        >
+          ▶ Favorito
+        </button>
+
+        <label htmlFor="volumen-slider" className="volumen-label">
+          Volumen
+        </label>
         <input
           type="range"
           min="0"
@@ -420,7 +482,6 @@ function LogicaReproductor({ onClose }) {
         X
       </button>
 
-      {/* Botones físicos */}
       <div className="botones-fisicos">
         <div
           className={`boton rojo ${juego === "fallout3" ? "activo" : ""}`}

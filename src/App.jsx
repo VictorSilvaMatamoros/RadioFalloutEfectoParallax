@@ -5,10 +5,13 @@ import FinalRoom from "./components/FinalRoom";
 import FinalRoomMobile from "./components/FinalRoomMobile";
 import TVLogin3D from "./components/TVLogin3D";
 
+import Auth from "./components/Auth";
+import { supabase } from "./lib/supabaseClient";
+
 function App() {
   // 1️⃣ Plataforma elegida tras el “login 3D”
   const [platform, setPlatform] = useState(null); // 'desktop' | 'mobile'
-
+  const [user, setUser] = useState(null);
   // 2️⃣ Lógica de audio
   const [audio] = useState(() => new Audio("/efectosAudio/tema_principal.mp3"));
   const [isPlaying, setIsPlaying] = useState(false);
@@ -51,6 +54,23 @@ function App() {
       audio.play().then(() => setIsPlaying(true));
     }
   };
+
+  // 0️⃣ Revisar si ya hay sesión activa
+  useEffect(() => {
+    const session = supabase.auth.getSession().then(({ data }) => {
+      if (data.session?.user) setUser(data.session.user)
+    })
+    // Escuchar cambios de auth (login/logout)
+    const { data: listener } = supabase.auth.onAuthStateChange((_, session) => {
+     setUser(session?.user ?? null)
+    })
+    return () => listener.subscription.unsubscribe()
+  }, [])
+
+  // Si no hay user, mostramos Auth
+ if (!user) {
+    return <Auth onLogin={(u) => setUser(u)} />
+  }
 
   // 3️⃣ Si no hay plataforma elegida, mostramos la TV 3D con links
   if (!platform) {
