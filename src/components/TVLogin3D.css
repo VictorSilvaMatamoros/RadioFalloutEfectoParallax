@@ -2,8 +2,7 @@
 .tv-login-container {
   width: 100vw;
   height: 100vh;
-  background: #333232;
-  overflow: hidden;
+background: radial-gradient(circle, #014704 0%, #05001f 100%), rgba(0, 0, 0, 0.7);  overflow: hidden;
 }
 
 .tv-login-buttons {

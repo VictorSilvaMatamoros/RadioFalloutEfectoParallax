@@ -466,50 +466,52 @@ function LogicaReproductor({ onClose }) {
         <h3>{cancion.titulo}</h3>
         <p>{cancion.artista}</p>
 
-        <button
-          className={`fav-btn ${estaEnFavoritos ? "activo" : ""}`}
-          onClick={async () => {
-            if (!user) {
-              alert("Debes iniciar sesión para gestionar favoritos.");
-              return;
-            }
+    <button
+  className={`fav-btn ${favoritos.some(fav => fav.song_url === cancion.url) ? 'activo' : ''}`}
+  onClick={async () => {
+    if (!user) {
+      alert("Debes iniciar sesión para gestionar favoritos.");
+      return;
+    }
 
-            if (estaEnFavoritos) {
-              const { error } = await removeFavorite({
-                userId: user.id,
-                url: cancion.url,
-              });
-              if (error) {
-                alert("Error al eliminar de favoritos.");
-              } else {
-                setFavoritos((prev) =>
-                  prev.filter((fav) => fav.song_url !== cancion.url)
-                );
-                alert("Canción eliminada de favoritos");
-              }
-            } else {
-              const { error, alreadyExists } = await addFavorite({
-                userId: user.id,
-                url: cancion.url,
-                title: cancion.titulo,
-              });
+    const esFavorita = favoritos.some(fav => fav.song_url === cancion.url);
 
-              if (alreadyExists) {
-                alert("Esta canción ya está en tus favoritos.");
-              } else if (error) {
-                alert("Hubo un error al guardar la canción.");
-              } else {
-                setFavoritos((prev) => [
-                  ...prev,
-                  { song_url: cancion.url, song_title: cancion.titulo },
-                ]);
-                alert("¡Canción añadida a favoritos!");
-              }
-            }
-          }}
-        >
-          ❤
-        </button>
+    if (esFavorita) {
+      const { error } = await supabase
+        .from("favorites")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("song_url", cancion.url);
+
+      if (error) {
+        alert("Error al eliminar la canción de favoritos.");
+      } else {
+        alert("Canción eliminada de favoritos.");
+        setFavoritos(favoritos.filter(fav => fav.song_url !== cancion.url));
+      }
+    } else {
+      const { error } = await supabase
+        .from("favorites")
+        .insert([
+          {
+            user_id: user.id,
+            song_url: cancion.url,
+            song_title: cancion.titulo,
+          },
+        ]);
+
+      if (error) {
+        alert("Hubo un error al guardar la canción.");
+      } else {
+        alert("¡Canción añadida a favoritos!");
+        setFavoritos([...favoritos, { song_url: cancion.url, song_title: cancion.titulo }]);
+      }
+    }
+  }}
+>
+  ❤
+</button>
+
 
         <label htmlFor="volumen-slider" className="volumen-label">
           Volumen

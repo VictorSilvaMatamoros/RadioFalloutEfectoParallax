@@ -1,8 +1,8 @@
-// src/components/Auth.jsx
 import React, { useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
+import './Auth.css';
 
-export default function Auth({ onLogin }) {
+export default function Auth({ onLogin, onGuest }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
@@ -19,6 +19,11 @@ export default function Auth({ onLogin }) {
     }
     if (res.error) setError(res.error.message)
     else onLogin(res.data.user)
+  }
+
+  const handleGuestLogin = () => {
+    // Pasamos null como usuario para simular un usuario no autenticado
+    onLogin(null)
   }
 
   return (
@@ -42,11 +47,19 @@ export default function Auth({ onLogin }) {
           {isSigningUp ? 'Registrarse' : 'Ingresar'}
         </button>
       </form>
+
       <p onClick={() => setIsSigningUp(!isSigningUp)} style={{ cursor: 'pointer' }}>
         {isSigningUp
           ? '¿Ya tienes cuenta? Iniciar sesión'
           : '¿No tienes cuenta? Regístrate'}
       </p>
+
+      {/* 🔓 Botón para entrar como invitado */}
+    <button className="boton-invitado" onClick={onGuest}>
+  Entrar como invitado
+</button>
+
+
     </div>
   )
 }

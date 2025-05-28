@@ -21,6 +21,10 @@
   transform: scale(1.1);
   filter: drop-shadow(0 0 8px #0f0);
 }
+.icono-no-autorizado:hover {
+  filter: drop-shadow(0 0 5px red);
+  transform: scale(1.1);
+}
 
 /* Fondo difuminado */
 .mobile-blur-bg {

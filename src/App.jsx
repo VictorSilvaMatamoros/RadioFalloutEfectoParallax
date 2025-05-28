@@ -17,6 +17,10 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [userHasInteracted, setUserHasInteracted] = useState(false);
 
+
+const [isGuest, setIsGuest] = useState(false);
+
+
   useEffect(() => {
     audio.loop = true;
     audio.volume = 0.4;
@@ -67,10 +71,12 @@ function App() {
     return () => listener.subscription.unsubscribe()
   }, [])
 
-  // Si no hay user, mostramos Auth
- if (!user) {
-    return <Auth onLogin={(u) => setUser(u)} />
-  }
+if (!user && !isGuest) {
+  return <Auth 
+    onLogin={(u) => setUser(u)} 
+    onGuest={() => setIsGuest(true)} 
+  />
+}
 
   // 3️⃣ Si no hay plataforma elegida, mostramos la TV 3D con links
   if (!platform) {
@@ -95,7 +101,7 @@ function App() {
       // Le pasamos onRestart para que FinalRoom dentro del Parallax también lo reciba
        <ParallaxSection onRestart={() => setPlatform(null)} />
     ) : (
-      <FinalRoomMobile onRestart={() => setPlatform(null)} />
+<FinalRoomMobile onRestart={() => setPlatform(null)} isGuest={isGuest} />
      )}
     </>
   );
