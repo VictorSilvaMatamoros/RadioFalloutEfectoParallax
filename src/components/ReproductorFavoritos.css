@@ -87,3 +87,18 @@ input[type="range"] {
   color: black;
   box-shadow: 0 0 10px #00ff00;
 }
+.favoritos-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* 🔑 evita bloquear otros elementos por defecto */
+  z-index: 10;
+}
+.controles-favoritos {
+  pointer-events: auto; /* ✅ solo los controles pueden ser tocados */
+}
+.fondo-png {
+  pointer-events: auto; /* ✅ también permite tocar el PNG */
+}

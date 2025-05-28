@@ -11,6 +11,7 @@ function ReproductorFavoritos() {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // Obtener el usuario actual de Supabase
   useEffect(() => {
     const fetchUser = async () => {
       const { data } = await supabase.auth.getUser();
@@ -19,6 +20,7 @@ function ReproductorFavoritos() {
     fetchUser();
   }, []);
 
+  // Cargar canciones favoritas del usuario
   useEffect(() => {
     if (!user) return;
     const fetchFavoritos = async () => {
@@ -26,11 +28,12 @@ function ReproductorFavoritos() {
         .from("favorites")
         .select("song_url, song_title")
         .eq("user_id", user.id);
-      setFavoritos(data);
+      setFavoritos(data || []);
     };
     fetchFavoritos();
   }, [user]);
 
+  // Ajustar volumen en el ref del audio
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volumen;
@@ -60,25 +63,35 @@ function ReproductorFavoritos() {
   const anterior = () => {
     setIndiceActual((prev) => (prev - 1 + favoritos.length) % favoritos.length);
   };
+
+  // Reproduce automáticamente la nueva canción si ya estaba en reproducción
   useEffect(() => {
     if (isPlaying && audioRef.current) {
       audioRef.current.play().catch(() => {});
     }
   }, [indiceActual]);
 
-  if (!user || favoritos.length === 0) return null;
+  // Si no hay usuario, no renderizar nada
+  if (!user) return null;
 
   return (
     <div className="favoritos-container">
-      {/* PNG que se comporta como botón */}
+      {/* Icono PNG siempre visible si hay usuario */}
       <img
         src="/img/Favoritos.png"
         alt="Favoritos"
         className="fondo-png"
-        onClick={() => setMostrarControles(!mostrarControles)}
+        onClick={() => {
+          if (favoritos.length === 0) {
+            alert("No tienes canciones en favoritos");
+          } else {
+            setMostrarControles(!mostrarControles);
+          }
+        }}
       />
 
-      {mostrarControles && (
+      {/* Mostrar controles solo si hay canciones y se han activado */}
+      {mostrarControles && favoritos.length > 0 && (
         <div className="controles-favoritos">
           <button
             className="cerrar-favoritos"
@@ -92,7 +105,7 @@ function ReproductorFavoritos() {
           </button>
 
           <label className="label-volumen">Tu lista de Favoritos</label>
-          <h3>{cancion.song_title}</h3>
+          <h3>{cancion?.song_title}</h3>
           <div className="botones">
             <button onClick={anterior}>⏮</button>
             <button onClick={reproducir}>▶</button>
@@ -112,7 +125,10 @@ function ReproductorFavoritos() {
         </div>
       )}
 
-      <audio ref={audioRef} src={cancion.song_url} onEnded={siguiente} />
+      {/* Audio control con canción actual */}
+      {cancion && (
+        <audio ref={audioRef} src={cancion.song_url} onEnded={siguiente} />
+      )}
     </div>
   );
 }
