@@ -333,3 +333,21 @@
   display: block;
   text-align: center;
 }
+.fav-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem; /* más pequeño */
+  cursor: pointer;
+  color: white; /* por defecto blanco */
+  transition: transform 0.2s ease, color 0.3s ease, text-shadow 0.3s ease;
+  padding: 0.2rem;
+}
+
+.fav-btn:hover {
+  transform: scale(1.2);
+}
+
+.fav-btn.activo {
+  color: #00ff00;
+  text-shadow: 0 0 6px #00ff00, 0 0 10px #00ff00;
+}

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./FinalRoom.css";
 import LogicaReproductor from "./LogicaReproductor";
 import RadioPlayer from "./RadioPlayer";
-
+import ReproductorFavoritos from "./ReproductorFavoritos";
 const FinalRoom = ({ onRestart }) => {
 
   const [mostrarPipBoy, setMostrarPipBoy] = useState(false);
@@ -53,13 +53,17 @@ const FinalRoom = ({ onRestart }) => {
       {showPopup && (
         <div className="popup">
           <p>
-            ¡Hola! Soy Mr. Mañoso. Toca la radio para escuchar una emisora al azar,
-            o el Pip-Boy para elegir entre las tres emisoras de radio de Fallout.
+            ¡Hola! Soy Mr. Mañoso.
+Toca la radio para escuchar una emisora aleatoria, o el Pip-Boy si prefieres elegir entre las tres radios clásicas de Fallout.
+Y si ya tienes canciones favoritas, usa el terminal de la derecha para escucharlas, gestionarlas y controlar el volumen a tu gusto. ¡La música está en tus manos, muchacho del refugio!
           </p>
           <button onClick={() => setShowPopup(false)}>Cerrar</button>
         </div>
       )}
-
+  <div>
+      {/* otros elementos del cuarto */}
+      <ReproductorFavoritos />
+    </div>
 
    {/* 🚪 Botón para volver al login 3D */}
       <button className="volver-inicio" onClick={onRestart}>

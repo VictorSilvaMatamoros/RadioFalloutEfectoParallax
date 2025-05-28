@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./LogicaReproductor.css";
-import { addFavorite } from '../lib/favorites';
+import { addFavorite, removeFavorite } from "../lib/favorites";
 import { supabase } from "../lib/supabaseClient";
 
 const playlists = {
@@ -358,8 +358,9 @@ function LogicaReproductor({ onClose }) {
 
   const canciones = playlists[juego];
   const cancion = canciones[cancionActual];
+  const [modoFavorito, setModoFavorito] = useState(false);
 
- useEffect(() => {
+  useEffect(() => {
     const fetchUser = async () => {
       const { data, error } = await supabase.auth.getUser();
       if (data?.user) setUser(data.user);
@@ -382,8 +383,7 @@ function LogicaReproductor({ onClose }) {
     fetchFavoritos();
   }, [user]);
 
-
- useEffect(() => {
+  useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volumen;
       audioRef.current.play().catch(() => {});
@@ -397,21 +397,21 @@ function LogicaReproductor({ onClose }) {
   }, [volumen]);
 
   const cambiarJuego = (nuevoJuego) => {
-    // 🔊 Reproducir sonido aleatorio
     const efectos = [
       "/efectosAudio/cambioEmisora.mp3",
       "/efectosAudio/cambioEmisora2.mp3",
     ];
-
-
-
-    const efectoElegido = new Audio(efectos[Math.floor(Math.random() * efectos.length)]);
+    const efectoElegido = new Audio(
+      efectos[Math.floor(Math.random() * efectos.length)]
+    );
     efectoElegido.play().catch(() => {});
 
+    setModoFavorito(false); // salimos del modo favorito
     setJuego(nuevoJuego);
-    const indiceAleatorio = Math.floor(Math.random() * playlists[nuevoJuego].length);
+    const indiceAleatorio = Math.floor(
+      Math.random() * playlists[nuevoJuego].length
+    );
     setCancionActual(indiceAleatorio);
-
 
     setTimeout(() => {
       if (audioRef.current) {
@@ -420,21 +420,44 @@ function LogicaReproductor({ onClose }) {
     }, 100);
   };
 
-
- const reproducirFavoritoAleatorio = () => {
+  const reproducirFavoritoAleatorio = () => {
     if (!favoritos.length) {
       alert("No tienes canciones favoritas aún.");
       return;
     }
 
     const aleatoria = favoritos[Math.floor(Math.random() * favoritos.length)];
-    const audio = new Audio(aleatoria.song_url);
-    audio.volume = volumen;
-    audio.play().catch(() => {});
+
+    if (audioRef.current) {
+      audioRef.current.pause(); // detener reproducción actual
+      audioRef.current.src = aleatoria.song_url; // nueva canción
+      audioRef.current.volume = volumen;
+      audioRef.current.load(); // asegurar que el audio se cargue
+      audioRef.current.play().catch(() => {});
+      setModoFavorito(true); // activar modo favorito
+    }
   };
 
+  const handleAddFavorite = async () => {
+    if (!user) return alert("Debes iniciar sesión para añadir favoritos.");
 
- return (
+    const { error, alreadyExists } = await addFavorite({
+      userId: user.id,
+      url: cancion.url,
+      title: cancion.titulo,
+    });
+
+    if (alreadyExists) {
+      alert("Esta canción ya está en tus favoritos.");
+    } else if (error) {
+      alert("Hubo un error al guardar la canción.");
+    } else {
+      alert("¡Canción añadida a favoritos!");
+    }
+  };
+  const estaEnFavoritos = favoritos.some((fav) => fav.song_url === cancion.url);
+
+  return (
     <div className="pipboy-reproductor">
       <img src="/img/PipBoy_Uso.png" alt="PipBoy" className="pipboy-fondo" />
 
@@ -444,25 +467,48 @@ function LogicaReproductor({ onClose }) {
         <p>{cancion.artista}</p>
 
         <button
-          className="fav-btn"
-          onClick={() => {
-            if (!user) return alert("Debes iniciar sesión para añadir favoritos.");
-            addFavorite({
-              userId: user.id,
-              url: cancion.url,
-              title: cancion.titulo,
-            });
+          className={`fav-btn ${estaEnFavoritos ? "activo" : ""}`}
+          onClick={async () => {
+            if (!user) {
+              alert("Debes iniciar sesión para gestionar favoritos.");
+              return;
+            }
+
+            if (estaEnFavoritos) {
+              const { error } = await removeFavorite({
+                userId: user.id,
+                url: cancion.url,
+              });
+              if (error) {
+                alert("Error al eliminar de favoritos.");
+              } else {
+                setFavoritos((prev) =>
+                  prev.filter((fav) => fav.song_url !== cancion.url)
+                );
+                alert("Canción eliminada de favoritos");
+              }
+            } else {
+              const { error, alreadyExists } = await addFavorite({
+                userId: user.id,
+                url: cancion.url,
+                title: cancion.titulo,
+              });
+
+              if (alreadyExists) {
+                alert("Esta canción ya está en tus favoritos.");
+              } else if (error) {
+                alert("Hubo un error al guardar la canción.");
+              } else {
+                setFavoritos((prev) => [
+                  ...prev,
+                  { song_url: cancion.url, song_title: cancion.titulo },
+                ]);
+                alert("¡Canción añadida a favoritos!");
+              }
+            }
           }}
         >
           ❤
-        </button>
-
-        <button
-          className="fav-btn"
-          onClick={reproducirFavoritoAleatorio}
-          style={{ marginTop: "10px" }}
-        >
-          ▶ Favorito
         </button>
 
         <label htmlFor="volumen-slider" className="volumen-label">
@@ -478,7 +524,16 @@ function LogicaReproductor({ onClose }) {
         />
       </div>
 
-      <button className="cerrar" onClick={onClose}>
+      <button
+        className="cerrar"
+        onClick={() => {
+          if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.src = "";
+          }
+          onClose();
+        }}
+      >
         X
       </button>
 
@@ -499,9 +554,13 @@ function LogicaReproductor({ onClose }) {
 
       <audio
         ref={audioRef}
-        src={cancion.url}
+        src={!modoFavorito ? cancion.url : ""}
         autoPlay
-        onEnded={() => setCancionActual((cancionActual + 1) % canciones.length)}
+        onEnded={() => {
+          if (!modoFavorito) {
+            setCancionActual((cancionActual + 1) % canciones.length);
+          }
+        }}
       />
     </div>
   );

@@ -1,0 +1,89 @@
+.fondo-png {
+  position: absolute;
+  top: 20%;
+  right: 5%;
+  width: 120px;         /* Escalado al ~30% */
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  z-index: 1;
+}
+
+.fondo-png:hover {
+  transform: scale(1.1);
+  filter: brightness(1.6) drop-shadow(0 0 10px #00ff00);
+}
+
+
+.controles-favoritos {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 1rem;
+  border: 1px solid #0f0;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 2;
+  position: absolute;
+  top: 40%;
+  right: 5%;
+  width: 250px;
+}
+.botones {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.botones button {
+  background: black;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  font-size: 1.2rem;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-shadow: 0 0 4px #00ff00;
+  border-radius: 5px;
+}
+
+.botones button:hover {
+  background-color: #00ff00;
+  color: black;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin-top: 5px;
+}
+
+.label-volumen {
+  margin-top: 10px;
+  margin-bottom: 2px;
+  font-size: 0.9rem;
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  text-shadow: 0 0 4px #00ff00;
+}
+.cerrar-favoritos {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  background: transparent;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-shadow: 0 0 3px #00ff00;
+  transition: all 0.2s ease;
+}
+
+.cerrar-favoritos:hover {
+  background: #00ff00;
+  color: black;
+  box-shadow: 0 0 10px #00ff00;
+}

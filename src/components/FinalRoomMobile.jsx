@@ -1,8 +1,8 @@
-// src/components/FinalRoomMobile.jsx
 import React, { useState } from "react";
 import "./FinalRoomMobile.css";
 import LogicaReproductor from "./LogicaReproductor";
 import RadioPlayer from "./RadioPlayer";
+import FavoritosPlayer from "./ReproductorFavoritos";
 
 export default function FinalRoomMobile({ onRestart }) {
   const [showPip, setShowPip] = useState(false);
@@ -11,10 +11,8 @@ export default function FinalRoomMobile({ onRestart }) {
 
   return (
     <div className="final-mobile-container">
-      {/* Fondo difuminado */}
       <div className="mobile-blur-bg" />
 
-      {/* Mr. Mañoso: abre el popup */}
       <img
         src="/img/Mr.Mañoso.png"
         alt="Mr. Mañoso"
@@ -22,37 +20,33 @@ export default function FinalRoomMobile({ onRestart }) {
         onClick={() => setShowPopup(true)}
       />
 
-      {/* Volver al login 3D */}
       <button className="mobile-restart" onClick={onRestart}>
         ← Inicio
       </button>
 
-      {/* Popup de Mr. Mañoso */}
       {showPopup && (
         <div className="popup">
           <p>
             ¡Hola! Soy Mr. Mañoso. Toca la radio para escuchar una emisora al azar,
-            o el Pip-Boy para elegir entre las tres emisoras de radio de Fallout.
+            o el Pip-Boy para elegir entre las tres emisoras de radio de Fallout,
+            o baja a la parte inferior para reproducir tu lista de canciones favoritas.
           </p>
           <button onClick={() => setShowPopup(false)}>Cerrar</button>
         </div>
       )}
 
-      {/* Overlay de Pip-Boy */}
       {showPip && (
         <div className="mobile-overlay">
           <LogicaReproductor onClose={() => setShowPip(false)} />
         </div>
       )}
 
-      {/* Overlay de Radio */}
       {showRadio && (
         <div className="mobile-overlay">
           <RadioPlayer onClose={() => setShowRadio(false)} />
         </div>
       )}
 
-      {/* Barra inferior con íconos */}
       <div className="mobile-actions">
         <img
           src="/img/PipBoy_Reposo.png"
@@ -72,6 +66,11 @@ export default function FinalRoomMobile({ onRestart }) {
             setShowPopup(false);
           }}
         />
+      </div>
+
+      {/* 🎵 FAVORITOS SIEMPRE VISIBLES */}
+      <div className="favoritos-mobile-wrapper">
+        <FavoritosPlayer />
       </div>
     </div>
   );

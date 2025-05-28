@@ -29,7 +29,7 @@ function TVScene({ links, onSelect, onLogout, session }) {
       />
 
       {/* Controles */}
-      <OrbitControls enablePan={false} enableZoom={true} />
+      <OrbitControls enablePan={false} enableZoom={false} />
 
       {/* Botones sobre la TV */}
       <Html
