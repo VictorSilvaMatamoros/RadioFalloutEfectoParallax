@@ -117,12 +117,12 @@
 }
 
 /* —————————————————————— */
-/* Móvil grande ≤ 480px    */
+/* Móvil grande ≤ 480px  CAMBIO EL BOTTO; DE 24 a 16RM-----------------------------------------  */
 /* —————————————————————— */
 @media (max-width: 480px) {
   .mobile-mr {
     width: 240px;
-    bottom: 26rem;
+    bottom: 16rem;
   }
   .radio-icon {
     width: 120px;
