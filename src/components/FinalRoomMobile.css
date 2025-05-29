@@ -266,10 +266,10 @@
   .pantalla-terminal {
     transform: rotate(90deg) translate(25%, -60%);
     transform-origin: top left;
-    width: 160px;
-    height: 165px;
-    top: 24%;
-    left: 49%;
+    width: 200px;
+    height: 200PX;
+    top: 21%;
+    left: 50%;
     font-size: 0.60rem;
     padding: 0.2rem;
     display: flex;
@@ -310,10 +310,43 @@
    .pipboy-fondo {
     transform: rotate(90deg);
       position: relative;
-    left: -80px; 
-    top: -5px; /* Ajusta según sea necesario */
+    left: -123px; 
+    top: -20px; /* Ajusta según sea necesario */
     width: auto;
     height: auto;
     max-width: 66vh; /* limitar el ancho visual tras girar */
   }
+
+
+.botones-fisicos {
+  bottom: -6%;
+  left: 60%;
+  width: 50%;
+  position: relative;
+}
+
+.boton.rojo {
+  position: absolute;
+  bottom: 80px;
+  left: 20%;  /* Ajusta este valor para moverlo horizontalmente */
+  width: 20px;
+  height: 20px;
+}
+
+.boton.azul {
+  position: absolute;
+  bottom: 80px;
+  left: 45%;  /* Ajusta este valor para moverlo horizontalmente */
+  width: 20px;
+  height: 20px;
+}
+
+.boton.verde {
+  position: absolute;
+  bottom: 80px;
+  left: 70%;  /* Ajusta este valor para moverlo horizontalmente */
+  width: 20px;
+  height: 20px;
+}
+  
 }
