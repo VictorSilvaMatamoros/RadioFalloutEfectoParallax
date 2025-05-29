@@ -196,7 +196,7 @@
   .mobile-overlay .radio-player label {
     order: 1;
     margin: 0.2rem 0 0.8rem;
-    font-size: 0.9rem;
+    font-size: 0.6rem;
   }
 
   /* Controles de play/pause y demás, reubicados tras el slider */
@@ -255,5 +255,65 @@
   .mobile-restart {
     padding: 0.3rem 0.6rem;
     font-size: 0.75rem;
+  }
+}
+
+
+
+/*AQUI CAMBIO DE ORINTEACION DE PANTALLA TERMINAL*/
+
+@media (max-width: 480px) {
+  .pantalla-terminal {
+    transform: rotate(90deg) translate(25%, -60%);
+    transform-origin: top left;
+    width: 160px;
+    height: 165px;
+    top: 24%;
+    left: 49%;
+    font-size: 0.60rem;
+    padding: 0.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  .pantalla-terminal h2,
+  .pantalla-terminal h3,
+  .pantalla-terminal p,
+  .pantalla-terminal label {
+    margin: 0;
+    text-align: center;
+  }
+
+  .pantalla-terminal input[type="range"] {
+    width: 100px;
+    margin-top: 0.3rem;
+  }
+
+  .pantalla-terminal .fav-btn {
+    font-size: 1.2rem;
+    background: transparent;
+    border: none;
+    color: rgba(0, 255, 0, 0.856);
+    cursor: pointer;
+    margin: 0.3rem 0;
+  }
+
+  
+  .pantalla-terminal .fav-btn:hover {
+    filter: drop-shadow(0 0 6px #0f0);
+    transform: scale(1.1);
+  }
+
+   .pipboy-fondo {
+    transform: rotate(90deg);
+      position: relative;
+    left: -80px; 
+    top: -5px; /* Ajusta según sea necesario */
+    width: auto;
+    height: auto;
+    max-width: 66vh; /* limitar el ancho visual tras girar */
   }
 }
