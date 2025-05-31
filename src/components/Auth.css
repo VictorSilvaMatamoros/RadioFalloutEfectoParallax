@@ -77,7 +77,7 @@
   transition: all 0.3s ease;
   text-shadow: 0 0 3px #00ff00;
   margin-top: 0.5rem;
-  width: 100%;
+  width: -8%;
 }
 
 .auth-container button:hover {
