@@ -51,6 +51,23 @@ function TVScene({ links, onSelect, onLogout, session }) {
               Cerrar sesión
             </button>
           )}
+          {/* CAMBIOS PARA VOLVER AL LOGIN DESDE INVITADO */}
+       {!session && (
+  <button
+    className="logout-btn"
+    onClick={() => {
+      // Resetear todo: sesión, invitado y plataforma
+      onSelect(null); // Esto limpia el estado platform
+      if (typeof window !== "undefined") {
+        // Recargar la app si quieres asegurarte del reinicio total
+        window.location.reload();
+      }
+    }}
+  >
+    Volver al login
+  </button>
+)}
+ {/* CAMBIOS PARA VOLVER AL LOGIN DESDE INVITADO */}
         </div>
       </Html>
     </>
@@ -67,9 +84,11 @@ export default function TVLogin3D({ links, onSelect }) {
     });
 
     // Escuchamos cambios en la sesión
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
+      }
+    );
 
     return () => {
       listener.subscription.unsubscribe();
